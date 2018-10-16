@@ -21,7 +21,7 @@ class ViewController: NSViewController {
 }
 extension ViewController: HorizontalScrollerViewDataSource {
     func numberOfViews(in horizontalScrollerView: HorizontalScrollerView) -> Int {
-        return 7
+        return 10
     }
     func horizontalScrollerView(_ horizontalScrollerView: HorizontalScrollerView, viewAt index: Int) -> NSView {
         let view = NSView(frame: NSRect(x: 0, y: 0, width: 10 * (index + 1), height: 20))

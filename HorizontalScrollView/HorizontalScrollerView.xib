@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HorizontalScrollerView" customModule="HorizontalScrollView" customModuleProvider="target">
+            <connections>
+                <outlet property="container" destination="c22-O7-iKe" id="Idr-T2-DSz"/>
+                <outlet property="scroll" destination="edP-n0-CQz" id="0sn-hV-ZsH"/>
+                <outlet property="stack" destination="OGu-9M-iTt" id="YWE-7o-3Cz"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="edP-n0-CQz">
+                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0rG-05-Key">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="AAh-u2-gkU">
+                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+                                <subviews>
+                                    <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="1" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OGu-9M-iTt">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="100"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="OGu-9M-iTt" firstAttribute="leading" secondItem="AAh-u2-gkU" secondAttribute="leading" id="3Cz-aG-lzY"/>
+                                    <constraint firstAttribute="trailing" secondItem="OGu-9M-iTt" secondAttribute="trailing" id="NDc-rc-Yk3"/>
+                                    <constraint firstAttribute="bottom" secondItem="OGu-9M-iTt" secondAttribute="bottom" id="alW-Lt-s2A"/>
+                                    <constraint firstItem="OGu-9M-iTt" firstAttribute="top" secondItem="AAh-u2-gkU" secondAttribute="top" id="cCh-Uk-k1Q"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="AAh-u2-gkU" firstAttribute="top" secondItem="0rG-05-Key" secondAttribute="top" id="1k6-zb-cHj"/>
+                            <constraint firstItem="AAh-u2-gkU" firstAttribute="leading" secondItem="0rG-05-Key" secondAttribute="leading" id="S9o-cj-T2f"/>
+                            <constraint firstAttribute="bottom" secondItem="AAh-u2-gkU" secondAttribute="bottom" id="ZyY-CG-UIl"/>
+                        </constraints>
+                    </clipView>
+                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="KFk-Fs-oa6">
+                        <rect key="frame" x="0.0" y="84" width="0.0" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="xVy-9Z-O3d">
+                        <rect key="frame" x="-16" y="0.0" width="16" height="100"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="edP-n0-CQz" secondAttribute="bottom" id="Ppy-GA-4c6"/>
+                <constraint firstAttribute="trailing" secondItem="edP-n0-CQz" secondAttribute="trailing" id="TSj-bv-SpO"/>
+                <constraint firstItem="edP-n0-CQz" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="khy-ex-sNR"/>
+                <constraint firstItem="edP-n0-CQz" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="rby-17-OUu"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

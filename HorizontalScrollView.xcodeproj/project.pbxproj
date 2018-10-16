@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2776ABA2175ED4700479F14 /* HorizontalScrollerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2776AB92175ED4700479F14 /* HorizontalScrollerView.xib */; };
 		C2F58D432175057B0033DED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F58D422175057B0033DED3 /* AppDelegate.swift */; };
 		C2F58D452175057B0033DED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F58D442175057B0033DED3 /* ViewController.swift */; };
 		C2F58D472175057D0033DED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2F58D462175057D0033DED3 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C2776AB92175ED4700479F14 /* HorizontalScrollerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HorizontalScrollerView.xib; sourceTree = "<group>"; };
 		C2F58D3F2175057B0033DED3 /* HorizontalScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HorizontalScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2F58D422175057B0033DED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2F58D442175057B0033DED3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				C2F58D422175057B0033DED3 /* AppDelegate.swift */,
 				C2F58D442175057B0033DED3 /* ViewController.swift */,
 				C2F58D52217505B00033DED3 /* HorizontalScrollerView.swift */,
+				C2776AB92175ED4700479F14 /* HorizontalScrollerView.xib */,
 				C2F58D462175057D0033DED3 /* Assets.xcassets */,
 				C2F58D482175057D0033DED3 /* Main.storyboard */,
 				C2F58D4B2175057D0033DED3 /* Info.plist */,
@@ -124,6 +127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2776ABA2175ED4700479F14 /* HorizontalScrollerView.xib in Resources */,
 				C2F58D472175057D0033DED3 /* Assets.xcassets in Resources */,
 				C2F58D4A2175057D0033DED3 /* Main.storyboard in Resources */,
 			);

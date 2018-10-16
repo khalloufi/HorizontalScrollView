@@ -28,23 +28,17 @@ extension NSView{
     }
 }
 class HorizontalScrollerView: NSView {
+    @IBOutlet weak var container: NSView!
+    @IBOutlet weak var stack: NSStackView!
+    @IBOutlet weak var scroll: NSScrollView!
     weak var dataSource: HorizontalScrollerViewDataSource?
     weak var delegate: HorizontalScrollerViewDelegate?
-    
     // 1
     private enum ViewConstants {
         static let Padding: CGFloat = 10
         static let Dimensions: CGFloat = 100
         static let Offset: CGFloat = 100
     }
-    // 2
-    private lazy var scroller:NSScrollView = {
-        let view =  NSScrollView()
-        view.hasHorizontalScroller = true
-        return view
-    }()
-    
-    // 3
     private lazy var contentViews:NSStackView = {
         let stack = NSStackView()
         stack.orientation = NSUserInterfaceLayoutOrientation.horizontal
@@ -52,7 +46,6 @@ class HorizontalScrollerView: NSView {
         stack.spacing = ViewConstants.Padding
         return stack
     }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         initializeScrollView()
@@ -64,47 +57,19 @@ class HorizontalScrollerView: NSView {
     }
     
     func initializeScrollView() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(scrollViewDidEnd(notification:)),
-                                               name: NSScrollView.didEndLiveMagnifyNotification,
-                                               object: nil)
-        //1
-        addSubview(scroller)
-        //2
-        scroller.translatesAutoresizingMaskIntoConstraints = false
-        //3
-        NSLayoutConstraint.activate([
-            scroller.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scroller.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scroller.topAnchor.constraint(equalTo: self.topAnchor),
-            scroller.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-            ])
-        scroller.documentView = contentViews
-        //2
-        contentViews.translatesAutoresizingMaskIntoConstraints = false
-        //3
-        NSLayoutConstraint.activate([
-            contentViews.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            contentViews.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            contentViews.topAnchor.constraint(equalTo: self.topAnchor),
-            contentViews.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-            ])
-        //4
-        let tapRecognizer = NSClickGestureRecognizer(target: self, action: #selector(scrollerClicked(gesture:)))
-        scroller.addGestureRecognizer(tapRecognizer)
+        Bundle.main.loadNibNamed("HorizontalScrollerView", owner: self, topLevelObjects: nil)
+        addSubview(container)
+        container.frame = self.bounds
+        container.autoresizingMask = [NSView.AutoresizingMask.height, NSView.AutoresizingMask.width]
+
+        stack.spacing = ViewConstants.Padding
+        let tapRecognizer = NSClickGestureRecognizer(target: self, action: #selector(itemClicked(gesture:)))
+        stack.addGestureRecognizer(tapRecognizer)
     }
-    func scrollToView(at index: Int, animated: Bool = true) {
-        let centralView = contentViews.views[index]
-        let targetCenter = centralView.center
-        let targetOffsetX = targetCenter.x - (scroller.bounds.width / 2)
-        scroller.documentView?.scroll(CGPoint(x: targetOffsetX, y: 0))
-        //scroller.setContentOffset(CGPoint(x: targetOffsetX, y: 0), animated: animated)
-    }
-    @objc func scrollerClicked(gesture: NSClickGestureRecognizer) {
-        let location = gesture.location(in: scroller)
-        guard let index = contentViews.views.index(where: { $0.frame.contains(location)}) else { return }
+    @objc func itemClicked(gesture: NSClickGestureRecognizer) {
+        let location = gesture.location(in: stack)
+        guard let index = stack.views.index(where: { $0.frame.contains(location)}) else { return }
         delegate?.horizontalScrollerView(self, didSelectViewAt: index)
-        scrollToView(at: index)
     }
     
     func view(at index :Int) -> NSView {
@@ -116,49 +81,20 @@ class HorizontalScrollerView: NSView {
         guard let dataSource = dataSource else {
             return
         }
-        
         //2 - Remove the old content views
-        contentViews.views.forEach { $0.removeFromSuperview() }
+        stack.views.forEach { $0.removeFromSuperview() }
         // 4 - Fetch and add the new views
         for index in (0..<dataSource.numberOfViews(in: self)){
             let view = dataSource.horizontalScrollerView(self, viewAt: index)
-            contentViews.addArrangedSubview(view)
-            contentViews.addConstraint(view.widthAnchor.constraint(equalToConstant: view.frame.width + ViewConstants.Padding))
+            stack.addArrangedSubview(view)
+            stack.addConstraint(view.widthAnchor.constraint(equalToConstant: view.frame.width + ViewConstants.Padding))
         }
-        // 7
-        //scroller.contentSize = CGSize(width: CGFloat(xValue + ViewConstants.Offset), height: frame.size.height)
-        //scroller.documentView?.setFrameSize(CGSize(width: CGFloat(xValue + ViewConstants.Offset), height: frame.size.height))
-        print("==>>>>==\(scroller.frame)")
-    }
-    
-    private func centerCurrentView() {
-        let centerRect = CGRect(
-            origin: CGPoint(x: scroller.bounds.midX - ViewConstants.Padding, y: 0),
-            size: CGSize(width: ViewConstants.Padding, height: bounds.height)
-        )
-        
-        guard let selectedIndex = contentViews.subviews.index(where: { $0.frame.intersects(centerRect) })
-            else { return }
-        let centralView = contentViews.subviews[selectedIndex]
-        let targetCenter = centralView.center
-        let targetOffsetX = targetCenter.x - (scroller.bounds.width / 2)
-        scroller.documentView?.scroll(CGPoint(x: targetOffsetX, y: 0))
-        //scroller.setContentOffset(CGPoint(x: targetOffsetX, y: 0), animated: true)
-        delegate?.horizontalScrollerView(self, didSelectViewAt: selectedIndex)
     }
 }
-extension HorizontalScrollerView {
-    @objc func scrollViewDidEnd(notification:Notification){
-        print(notification)
-        centerCurrentView()
-    }
-    /*func scrollViewDidEndDragging(_ scrollView: NSScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            centerCurrentView()
+extension NSClipView{
+    open override var isFlipped: Bool{
+        get{
+           return true
         }
     }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: NSScrollView) {
-        centerCurrentView()
-    }*/
 }
